@@ -1,6 +1,8 @@
 package matpazikas.com.github.lista_de_compras
 
 import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import matpazikas.com.github.lista_de_compras.ui.theme.ListadecomprasTheme
+import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,5 +26,18 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.title = "Lista de Compras"
 
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+        val itemsAdapter = ItemsAdapter()
+        recyclerView.adapter = itemsAdapter
+
+        val button = findViewById<Button>(R.id.button)
+        val editText = findViewById<EditText>(R.id.editText)
+
+        button.setOnClickListener {
+            val item = ItemModel(editText.text.toString())
+
+            itemsAdapter.addItem(item)
+            editText.text.clear()
+        }
     }
 }
